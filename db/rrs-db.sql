@@ -19,7 +19,7 @@ create table if not exists TRAIN_STATUS(train_no int primary key, _1A varchar(10
  _3A varchar(10), _SL varchar(10), date date);
 
 create table if not exists TICKET(ticket_id int primary key,username varchar(50),status varchar(10),
-no_of_passengers int, train_no int, from varchar(10), to varchar(10), date date, fare float, 
+no_of_passengers int, train_no int, `from` varchar(10), `to` varchar(10), date date, fare float, 
 constraint foreign key(username) references USER(username) ON UPDATE CASCADE ON DELETE CASCADE,
 constraint foreign key(train_no) references TRAIN(train_no) ON UPDATE CASCADE ON DELETE CASCADE);
 
@@ -29,12 +29,10 @@ constraint foreign key(username) references USER(username) ON UPDATE CASCADE ON 
 constraint foreign key(ticket_id) references TICKET(ticket_id)ON UPDATE CASCADE ON DELETE CASCADE);
 
 create table if not exists STARTS( train_no int primary key, station_code
-varchar(10), constraint foreign key(train_no) references TRAIN(train_no), constraint foreign
-key(station_code) references STATION(station_code));
+varchar(10), constraint foreign key(train_no) references TRAIN(train_no) ON UPDATE CASCADE ON DELETE CASCADE);
 
 create table if not exists STOPS( train_no int primary key, station_code
-varchar(10), constraint foreign key(train_no) references TRAIN(train_no) ON UPDATE CASCADE ON DELETE CASCADE, constraint foreign
-key(station_code) references STATION(station_code) ON UPDATE CASCADE ON DELETE CASCADE);
+varchar(10), constraint foreign key(train_no) references TRAIN(train_no) ON UPDATE CASCADE ON DELETE CASCADE);
 
 create table if not exists CANCEL(username varchar(50), ticket_id int, passenger_id int,constraint
 foreign key(ticket_id) references TICKET(ticket_id) ON UPDATE CASCADE ON DELETE CASCADE,constraint foreign key(passenger_id)
@@ -42,15 +40,15 @@ references PASSENGER(passenger_id) ON UPDATE CASCADE ON DELETE CASCADE,constrain
 USER(username) ON UPDATE CASCADE ON DELETE CASCADE);
 
 -- insert prepared data
-insert into TRAIN 
-values
-	(12587, 'AMARNATH EXP', 22.40, 1248, 'Y','x','x','x','x','x','x', 0.46, 1.22, 1.70, 3.00),
-	(12379, 'JALIANWALA B EX', 27.10, 1894, 'x','x','x','x','x','x','Y', 0.4, 1.20, 1.5, 2.8),
-    (13006, 'ASR HWH MAIL', 37.05, 1910, 'Y','Y','Y','Y','Y','Y','Y', 0.5, 1.30, 1.75, 3.20),
-    (19614,	'ASR AII EXP', '12.45', 848, 'x', 'x', 'x', 'x', 'Y', 'x', 'Y', 0.5, 1.3, 1.75, 3.2),
-    (12318, 'AKAL TAKHAT EXP', '32.55', 1894, 'x', 'T', 'x', 'x', 'Y', 'x', 'x', 0.4, 1.5, 1.85, 3.5 );
+-- insert into TRAIN 
+-- values
+-- 	(12587, 'AMARNATH EXP', 22.40, 1248, 'Y','x','x','x','x','x','x', 0.46, 1.22, 1.70, 3.00),
+-- 	(12379, 'JALIANWALA B EX', 27.10, 1894, 'x','x','x','x','x','x','Y', 0.4, 1.20, 1.5, 2.8),
+--     (13006, 'ASR HWH MAIL', 37.05, 1910, 'Y','Y','Y','Y','Y','Y','Y', 0.5, 1.30, 1.75, 3.20),
+--     (19614,	'ASR AII EXP', '12.45', 848, 'x', 'x', 'x', 'x', 'Y', 'x', 'Y', 0.5, 1.3, 1.75, 3.2),
+--     (12318, 'AKAL TAKHAT EXP', '32.55', 1894, 'x', 'T', 'x', 'x', 'Y', 'x', 'x', 0.4, 1.5, 1.85, 3.5 );
 
-insert into STATION (station_code, name, train_no, arrival_time, departure_time, hault, dist, day)
+insert into STATION (station_code, station_name, train_no, arrival_time, departure_time, hault, dist, day)
 values
     ('GKP', 'Gorakhpur', 12578, '14:20', '14:20', 0, 0, 1),
     ('KLD', 'Khalilabad', 12578, '14:54', '14:56', 2, 35, 1),
